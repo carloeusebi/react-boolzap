@@ -24,12 +24,18 @@ const ChatPage = (params: Params) => {
 
   const [updatedMessages, setUpdatedMessages] = useState(messages);
 
-  const send = (contact: ContactObj, message: Message) => {
+  /**
+   * Logs the message and scrolls the page
+   * @param contact the contact we are chatting with
+   * @param message the obj with the message to send
+   */
+  const send = (contact: ContactObj, message: Message): void => {
     contact.messages.push(message);
     setUpdatedMessages([...contact.messages]);
+    //todo add scroll function
   };
 
-  const sendResponse = async () => {
+  const sendResponse = async (): Promise<void> => {
     if (activeContact) {
       setIsTyping(activeContactId);
       const message: string = await getResponse(data.user.name, activeContact);
@@ -45,7 +51,7 @@ const ChatPage = (params: Params) => {
     }
   };
 
-  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     const message: string = e.currentTarget.value;
     e.currentTarget.value = "";
     if (activeContact) {

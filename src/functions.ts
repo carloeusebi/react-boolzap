@@ -3,9 +3,17 @@ import { Message } from "./data";
 import axios from "axios";
 import APY_KEY from "./auth";
 
-const getNewMessageId = (contact: ContactObj) => contact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
+/**
+ * Checks all the contact messages ids and returns the lowest possibile non present id
+ * @returns the id for the new message
+ */
+const getNewMessageId = (contact: ContactObj): number => contact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
 
-const getCurrentTime = () => {
+/**
+ * calculates the current time
+ * @returns the current times
+ */
+const getCurrentTime = (): string => {
     const d:Date = new Date();
     const date: string = d.toLocaleDateString();
     const time: string = d.toLocaleTimeString();
@@ -13,13 +21,27 @@ const getCurrentTime = () => {
     return date + ' ' + time;
 }
 
-export const createNewMessage = (contact: ContactObj, message: string, status: string) => {
+/**
+ * Mounts different data in an object representing the message that can be added to the contact's messages array
+ * @param {ContactObj} contact the current active contact
+ * @param {string} message the message text
+ * @param {string} status the message status: sent or received
+ * @returns {Message} the message to be added
+ */
+export const createNewMessage = (contact: ContactObj, message: string, status: string): Message => {
     const id:number = getNewMessageId(contact);
     const date:string = getCurrentTime();
     return { id, message, status, date };
 }
 
-const getGptResponse = async (userName: string, contact: ContactObj) => {
+/**
+ * The actual API call
+ * @param userName 
+ * @param contact 
+ * @returns 
+ */
+const getGptResponse = async (userName: string, contact: ContactObj): Promise<string> => {
+
     const getChatHistory = (userName: string, contact: ContactObj) => {
         // initialize chatgpt chat history to be sent to chatgpt for context;
         // first object in the array is the initial prompt with the instructions for chatgpt
@@ -54,7 +76,7 @@ const getGptResponse = async (userName: string, contact: ContactObj) => {
         }
     };
 
-    let message = '';
+    let message:string = '';
 
     try {
         const response = await axios.request(options);
@@ -72,9 +94,17 @@ const getGptResponse = async (userName: string, contact: ContactObj) => {
     return message;
 }
 
-export const getResponse = async (userName: string, contact: ContactObj) => {
+
+/**
+ * Generates a response, if an API KEY is found it will ask chatgpt to generate a coherent answer to our message, otherwise it will return a message with the instructions to get the key
+ * @param {string} userName user's name
+ * @param {ContactObj} contact the current active contact
+ * @returns {string} the message text
+ */
+export const getResponse = async (userName: string, contact: ContactObj): Promise<string> => {
+
     // The default message with instruction on how to get and 'install' a key
-    let message = `Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere.<br />
+    let message:string = `Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere.<br />
     Per poter attivare chatGPT creare un file auth.js nella cartella JS ed inserire la propria chiave in una variabile con il nome KEY.<br /><br />
     Per ottenere una API Key per OpenAI devi seguire questi passaggi: 1. Vai sul sito di OpenAI 2. Clicca sul pulsante "Sign Up for GPT-3" 3. Inserisci il tuo indirizzo email e premi su "Get Access" 4. Compila il form con le informazioni richieste e seleziona il tipo di utilizzo che intendi fare della piattaforma 5. Premi "Apply" 6. Dovresti ricevere un'email di risposta con le istruzioni per accedere alla dashboard di OpenAI e ottenere la tua API Key Spero di esserti stato utile!`;
 
