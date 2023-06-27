@@ -3,7 +3,7 @@ import Chat from "./Chat";
 import Contact from "./Contact";
 import { ContactObj, Message } from "../data";
 import data from "../data";
-import { createNewMessage } from "../functions";
+import { createNewMessage, getResponse } from "../functions";
 
 interface Params {
   activeContactId: number;
@@ -25,6 +25,20 @@ const ChatPage = (params: Params) => {
     setUpdatedMessages([...contact.messages]);
   };
 
+  const sendResponse = async () => {
+    if (activeContact) {
+      const message: string = await getResponse(data.user.name, activeContact);
+
+      const responseMessage: Message = createNewMessage(
+        activeContact,
+        message,
+        "received"
+      );
+
+      send(activeContact, responseMessage);
+    }
+  };
+
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const message: string = e.currentTarget.value;
     e.currentTarget.value = "";
@@ -36,6 +50,8 @@ const ChatPage = (params: Params) => {
       );
 
       send(activeContact, newMessage);
+
+      sendResponse();
     }
   };
 
