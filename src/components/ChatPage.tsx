@@ -7,13 +7,17 @@ import { createNewMessage, getResponse } from "../functions";
 
 interface Params {
   activeContactId: number;
+  isTyping: number;
+  setIsTyping: (id: number) => void;
 }
 
 const ChatPage = (params: Params) => {
-  const { activeContactId } = params;
+  const { activeContactId, isTyping, setIsTyping } = params;
   const activeContact: ContactObj | undefined = data.contacts.find(
     ({ id }) => id === activeContactId
   );
+
+  const id = activeContact ? activeContact.id : -1;
   const name = activeContact ? activeContact.name : "";
   const avatar = activeContact ? activeContact.avatar : "";
   const messages = activeContact ? activeContact.messages : [];
@@ -27,6 +31,7 @@ const ChatPage = (params: Params) => {
 
   const sendResponse = async () => {
     if (activeContact) {
+      setIsTyping(activeContactId);
       const message: string = await getResponse(data.user.name, activeContact);
 
       const responseMessage: Message = createNewMessage(
@@ -36,6 +41,7 @@ const ChatPage = (params: Params) => {
       );
 
       send(activeContact, responseMessage);
+      setIsTyping(-1);
     }
   };
 
@@ -61,7 +67,13 @@ const ChatPage = (params: Params) => {
         <div className="d-flex align-center">
           <div>{/* TODO add back button */}</div>
           <div className="contact flex-shrink-0">
-            <Contact name={name} avatar={avatar} messages={messages} />
+            <Contact
+              id={id}
+              name={name}
+              avatar={avatar}
+              messages={messages}
+              isTyping={isTyping}
+            />
           </div>
         </div>
         <div className="activity-buttons">

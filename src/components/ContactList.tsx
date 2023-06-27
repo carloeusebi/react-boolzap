@@ -3,12 +3,14 @@ import Contact from "./Contact";
 import data from "../data";
 
 interface Params {
+  isTyping: number;
+  activeContactId: number;
   setActiveContactId: (id: number) => void;
 }
 
 const ContactList = (params: Params) => {
   const { contacts } = data;
-  const { setActiveContactId } = params;
+  const { activeContactId, setActiveContactId, isTyping } = params;
 
   return (
     <ul id="contact-list">
@@ -21,9 +23,12 @@ const ContactList = (params: Params) => {
             }}
           >
             <Contact
+              id={contact.id}
               name={contact.name}
               avatar={contact.avatar}
               messages={contact.messages}
+              isTyping={isTyping}
+              activeContactId={activeContactId}
             />
           </li>
         );

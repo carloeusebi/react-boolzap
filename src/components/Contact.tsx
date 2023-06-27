@@ -1,14 +1,17 @@
 import React from "react";
 import { Message } from "../data";
 
-interface Props {
+interface Params {
+  id?: number;
   name: string;
   avatar: string;
   messages?: Message[];
+  isTyping?: number;
+  activeContactId?: number;
 }
 
-const Contact = (props: Props) => {
-  const { name, avatar, messages } = props;
+const Contact = (params: Params) => {
+  const { name, avatar, messages } = params;
   let lastMessage: Message | undefined;
 
   if (messages) {
@@ -22,8 +25,14 @@ const Contact = (props: Props) => {
       </div>
       <div className="name-wrapper">
         <p className="name">{name}</p>
-        <p className="message">{lastMessage && lastMessage.message}</p>
-        <p className="last-access">{lastMessage && lastMessage.date}</p>
+        {params.isTyping === params.id ? (
+          <p className="typing">Is Typing..</p>
+        ) : (
+          <div>
+            <p className="message">{lastMessage && lastMessage.message}</p>
+            <p className="last-access">{lastMessage && lastMessage.date}</p>
+          </div>
+        )}
       </div>
     </div>
   );

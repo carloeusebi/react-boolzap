@@ -5,12 +5,14 @@ import Notification from "./Notification";
 import data from "../data";
 
 interface Params {
+  isTyping: number;
+  activeContactId: number;
   setActiveContactId: (id: number) => void;
 }
 
 const ContactsPage = (params: Params) => {
   const { name: userName, avatar: userAvatar } = data.user;
-  const { setActiveContactId } = params;
+  const { activeContactId, setActiveContactId, isTyping } = params;
 
   return (
     <section id="contacts">
@@ -26,7 +28,11 @@ const ContactsPage = (params: Params) => {
       <div className="search-contact">
         <input type="search" placeholder="Search or start a new chat"></input>
       </div>
-      <ContactList setActiveContactId={setActiveContactId} />
+      <ContactList
+        activeContactId={activeContactId}
+        setActiveContactId={setActiveContactId}
+        isTyping={isTyping}
+      />
     </section>
   );
 };

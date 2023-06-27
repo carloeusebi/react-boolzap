@@ -102,8 +102,7 @@ textarea {
   padding: 0.5rem 0;
 }
 
-.contact .message,
-.contact .last-access {
+.contact :is(.message, .last-access, .typing) {
   color: var(--text-gray);
   font-size: 14px;
 }
@@ -114,7 +113,7 @@ textarea {
   text-overflow: ellipsis;
 }
 
-.contact .last-access {
+.contact :is(.last-access, .typing) {
   flex-grow: 1;
   text-align: right;
 }
@@ -151,6 +150,11 @@ textarea {
 #contact-list .contact {
   position: relative;
 }
+
+#contact-list .contact .name-wrapper {
+  max-width: 220px;
+}
+
 
 #contact-list .last-access {
   position: absolute;
