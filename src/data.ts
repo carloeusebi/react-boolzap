@@ -3,7 +3,7 @@ interface User{
   avatar: string,
 }
 
-export interface Message{
+export interface MessageObj{
   id: number,
   date: string,
   message: string,
@@ -15,7 +15,7 @@ export interface ContactObj{
   name: string,
   avatar: string,
   visible: boolean,
-  messages: Message[],  
+  messages: MessageObj[],  
 }
 
 interface Data {

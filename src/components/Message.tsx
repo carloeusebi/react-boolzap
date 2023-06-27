@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { MessageObj } from "../data";
 
-const Message = () => {
+const Message = ({ message }: { message: MessageObj }) => {
+  const { message: text, status, date } = message;
   return (
-    <div>Message</div>
-  )
-}
+    <div className={`bubble ${status}`}>
+      <p className="message mr-20">{text}</p>
+      <div className="date">{date}</div>
+      <i className="fa-solid fa-angle-down"></i>
+    </div>
+  );
+};
 
-export default Message
+export default Message;

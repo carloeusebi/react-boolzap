@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { Message } from "../data";
+import { MessageObj } from "../data";
+import Message from "./Message";
 
 interface Props {
-  messages: Message[];
+  messages: MessageObj[];
 }
 
 const Chat = (props: Props) => {
@@ -10,20 +11,13 @@ const Chat = (props: Props) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log(messages);
     messagesEndRef.current?.scrollIntoView();
   }, [messages]);
 
   return (
     <section className="chat">
-      {messages.map(({ id, message, status, date }) => {
-        return (
-          <div className={`bubble ${status}`} key={id}>
-            <p className="message mr-20">{message}</p>
-            <div className="date">{date}</div>
-            <i className="fa-solid fa-angle-down"></i>
-          </div>
-        );
+      {messages.map(m => {
+        return <Message message={m} key={m.id} />;
       })}
       <div ref={messagesEndRef} />
     </section>

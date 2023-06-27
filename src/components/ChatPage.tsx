@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Chat from "./Chat";
 import Contact from "./Contact";
-import { ContactObj, Message } from "../data";
+import { ContactObj, MessageObj } from "../data";
 import data from "../data";
 import { createNewMessage, getResponse } from "../functions";
 
@@ -29,7 +29,7 @@ const ChatPage = (props: Props) => {
    * @param contact the contact we are chatting with
    * @param message the obj with the message to send
    */
-  const send = (contact: ContactObj, message: Message): void => {
+  const send = (contact: ContactObj, message: MessageObj): void => {
     contact.messages = [...contact.messages, message];
     setUpdatedMessages([...contact.messages]);
   };
@@ -39,7 +39,7 @@ const ChatPage = (props: Props) => {
       setIsTyping(activeContactId);
       const message: string = await getResponse(data.user.name, activeContact);
 
-      const responseMessage: Message = createNewMessage(
+      const responseMessage: MessageObj = createNewMessage(
         activeContact,
         message,
         "received"
@@ -57,7 +57,7 @@ const ChatPage = (props: Props) => {
 
     e.currentTarget.value = "";
     if (activeContact) {
-      const newMessage: Message = createNewMessage(
+      const newMessage: MessageObj = createNewMessage(
         activeContact,
         message,
         "sent"

@@ -1,5 +1,4 @@
-import { ContactObj } from "./data";
-import { Message } from "./data";
+import { ContactObj, MessageObj } from "./data";
 import axios from "axios";
 import APY_KEY from "./auth";
 
@@ -28,7 +27,7 @@ const getCurrentTime = (): string => {
  * @param {string} status the message status: sent or received
  * @returns {Message} the message to be added
  */
-export const createNewMessage = (contact: ContactObj, message: string, status: string): Message => {
+export const createNewMessage = (contact: ContactObj, message: string, status: string): MessageObj => {
     const id:number = getNewMessageId(contact);
     const date:string = getCurrentTime();
     return { id, message, status, date };

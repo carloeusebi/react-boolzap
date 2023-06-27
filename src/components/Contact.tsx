@@ -1,18 +1,18 @@
 import React from "react";
-import { Message } from "../data";
+import { MessageObj } from "../data";
 
 interface Props {
   id?: number | null;
   name: string;
   avatar: string;
-  messages?: Message[];
+  messages?: MessageObj[];
   isTyping?: number;
   activeContactId?: number;
 }
 
 const Contact = (props: Props) => {
   const { name, avatar, messages } = props;
-  let lastMessage: Message | undefined;
+  let lastMessage: MessageObj | undefined;
 
   if (messages) {
     lastMessage = messages.length ? messages.at(-1) : undefined;
