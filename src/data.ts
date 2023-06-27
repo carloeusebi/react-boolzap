@@ -1,9 +1,34 @@
-const data = {
-  user: {
+interface User{
+  name: string,
+  avatar: string,
+}
+
+export interface Message{
+  id: number,
+  date: string,
+  message: string,
+  status: string
+}
+
+export interface ContactObj{
+  id: number,
+  name: string,
+  avatar: string,
+  visible: boolean,
+  messages: Message[],  
+}
+
+interface Data {
+  user: User,
+  contacts: ContactObj[]
+}
+
+const data:Data = {
+  user:{
     name: 'Carlo Eusebi',
     avatar: '_io'
   },
-  contacts: [
+  contacts:  [
     {
       id: 1,
       name: 'Michele',
@@ -193,8 +218,8 @@ const data = {
           status: 'received'
         }
       ],
-    }
+    },
   ]
-
 }
 
+export default data;
