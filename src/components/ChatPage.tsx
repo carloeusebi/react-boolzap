@@ -30,7 +30,7 @@ const ChatPage = (params: Params) => {
    * @param message the obj with the message to send
    */
   const send = (contact: ContactObj, message: Message): void => {
-    contact.messages.push(message);
+    contact.messages = [...contact.messages, message];
     setUpdatedMessages([...contact.messages]);
     //todo add scroll function
   };

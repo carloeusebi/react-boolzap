@@ -2,7 +2,7 @@ import React from "react";
 import { Message } from "../data";
 
 interface Params {
-  id?: number;
+  id?: number | null;
   name: string;
   avatar: string;
   messages?: Message[];
@@ -25,7 +25,7 @@ const Contact = (params: Params) => {
       </div>
       <div className="name-wrapper">
         <p className="name">{name}</p>
-        {params.isTyping === params.id ? (
+        {params.id && params.isTyping === params.id ? (
           <p className="typing">Is Typing..</p>
         ) : (
           <div>
