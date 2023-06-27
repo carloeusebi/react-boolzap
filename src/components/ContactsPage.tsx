@@ -4,15 +4,15 @@ import ContactList from "./ContactList";
 import Notification from "./Notification";
 import data from "../data";
 
-interface Params {
+interface Props {
   isTyping: number;
   activeContactId: number;
   setActiveContactId: (id: number) => void;
 }
 
-const ContactsPage = (params: Params) => {
+const ContactsPage = (props: Props) => {
   const { name: userName, avatar: userAvatar } = data.user;
-  const { activeContactId, setActiveContactId, isTyping } = params;
+  const { activeContactId, setActiveContactId, isTyping } = props;
 
   const [searchWord, setSearchWord] = useState("");
 

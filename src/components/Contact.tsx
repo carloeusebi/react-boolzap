@@ -1,7 +1,7 @@
 import React from "react";
 import { Message } from "../data";
 
-interface Params {
+interface Props {
   id?: number | null;
   name: string;
   avatar: string;
@@ -10,8 +10,8 @@ interface Params {
   activeContactId?: number;
 }
 
-const Contact = (params: Params) => {
-  const { name, avatar, messages } = params;
+const Contact = (props: Props) => {
+  const { name, avatar, messages } = props;
   let lastMessage: Message | undefined;
 
   if (messages) {
@@ -25,7 +25,7 @@ const Contact = (params: Params) => {
       </div>
       <div className="name-wrapper">
         <p className="name">{name}</p>
-        {params.id && params.isTyping === params.id ? (
+        {props.id && props.isTyping === props.id ? (
           <p className="typing">Is Typing..</p>
         ) : (
           <div>

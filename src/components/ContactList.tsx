@@ -2,21 +2,21 @@ import React, { createContext } from "react";
 import Contact from "./Contact";
 import data from "../data";
 
-interface Params {
+interface Props {
   isTyping: number;
   searchWord: string;
   activeContactId: number;
   setActiveContactId: (id: number) => void;
 }
 
-const ContactList = (params: Params) => {
+const ContactList = (props: Props) => {
   const { contacts } = data;
-  const { activeContactId, setActiveContactId, isTyping } = params;
+  const { activeContactId, setActiveContactId, isTyping } = props;
 
   return (
     <ul id="contact-list">
-      {contacts.map((contact) => {
-        if (contact.name.toLowerCase().includes(params.searchWord)) {
+      {contacts.map(contact => {
+        if (contact.name.toLowerCase().includes(props.searchWord)) {
           return (
             <li
               key={contact.id}

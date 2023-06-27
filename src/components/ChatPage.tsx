@@ -5,14 +5,14 @@ import { ContactObj, Message } from "../data";
 import data from "../data";
 import { createNewMessage, getResponse } from "../functions";
 
-interface Params {
+interface Props {
   activeContactId: number;
   isTyping: number;
   setIsTyping: (id: number) => void;
 }
 
-const ChatPage = (params: Params) => {
-  const { activeContactId, isTyping, setIsTyping } = params;
+const ChatPage = (props: Props) => {
+  const { activeContactId, isTyping, setIsTyping } = props;
   const activeContact: ContactObj | undefined = data.contacts.find(
     ({ id }) => id === activeContactId
   );
@@ -98,7 +98,7 @@ const ChatPage = (params: Params) => {
         <div className="message-input h-100 flex-grow-1">
           <input
             placeholder="Type a message"
-            onKeyUp={(e) => e.key === "Enter" && handleInput(e)}
+            onKeyUp={e => e.key === "Enter" && handleInput(e)}
           />
         </div>
         <div className="send activity-buttons">
