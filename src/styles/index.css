@@ -207,6 +207,13 @@ textarea {
 
 #chat .chat {
   background-image: url("../../public/img/mine.jpg");
+  flex-grow: 1;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 7%;
 }
 
 #chat .contact .message {
@@ -219,6 +226,45 @@ textarea {
 
 #chat .contact .last-access::before {
   content: 'Last seen online: ';
+}
+
+.chat .bubble {
+  max-width: 80%;
+  padding: 15px 10px 10px;
+  border-radius: 15px;
+  margin: .2rem 0;
+  position: relative;
+}
+
+.chat .bubble.sent {
+  background-color: var(--sent-message-color);
+  align-self: end;
+}
+
+.chat .bubble.received {
+  background-color: var(--received-message-color);
+  align-self: start;
+}
+
+.chat .bubble .date {
+  color: var(--text-gray);
+  font-size: 12px;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.chat .bubble .fa-angle-down {
+  color: var(--text-dark-gray);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+
+  display: none;
+}
+
+.chat .bubble:hover .fa-angle-down {
+  display: inline-block;
 }
 
 /* MEDIA */

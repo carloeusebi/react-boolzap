@@ -32,7 +32,7 @@ const ChatPage = (params: Params) => {
           <i className="fa-solid fa-xl fa-ellipsis-vertical"></i>
         </div>
       </header>
-      <Chat />
+      <Chat messages={messages} />
       <footer className="d-flex justify-center align-center">
         <div className="emoticons activity-buttons">
           <i className="fa-regular fa-face-smile fa-xl"></i>
