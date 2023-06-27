@@ -5,14 +5,14 @@ import { ContactObj, MessageObj } from "../data";
 import data from "../data";
 import { createNewMessage, getResponse } from "../functions";
 
-interface Props {
+interface Params {
   activeContactId: number;
   isTyping: number;
   setIsTyping: (id: number) => void;
 }
 
-const ChatPage = (props: Props) => {
-  const { activeContactId, isTyping, setIsTyping } = props;
+const ChatPage = (params: Params) => {
+  const { activeContactId, isTyping, setIsTyping } = params;
   const activeContact: ContactObj | undefined = data.contacts.find(
     ({ id }) => id === activeContactId
   );

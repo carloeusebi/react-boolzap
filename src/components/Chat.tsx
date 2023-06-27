@@ -2,12 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { MessageObj } from "../data";
 import Message from "./Message";
 
-interface Props {
-  messages: MessageObj[];
-}
-
-const Chat = (props: Props) => {
-  const { messages } = props;
+const Chat = ({ messages }: { messages: MessageObj[] }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
