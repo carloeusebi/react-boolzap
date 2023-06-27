@@ -4,6 +4,7 @@ import data from "../data";
 
 interface Params {
   isTyping: number;
+  searchWord: string;
   activeContactId: number;
   setActiveContactId: (id: number) => void;
 }
@@ -15,23 +16,25 @@ const ContactList = (params: Params) => {
   return (
     <ul id="contact-list">
       {contacts.map((contact) => {
-        return (
-          <li
-            key={contact.id}
-            onClick={() => {
-              setActiveContactId(contact.id);
-            }}
-          >
-            <Contact
-              id={contact.id}
-              name={contact.name}
-              avatar={contact.avatar}
-              messages={contact.messages}
-              isTyping={isTyping}
-              activeContactId={activeContactId}
-            />
-          </li>
-        );
+        if (contact.name.toLowerCase().includes(params.searchWord)) {
+          return (
+            <li
+              key={contact.id}
+              onClick={() => {
+                setActiveContactId(contact.id);
+              }}
+            >
+              <Contact
+                id={contact.id}
+                name={contact.name}
+                avatar={contact.avatar}
+                messages={contact.messages}
+                isTyping={isTyping}
+                activeContactId={activeContactId}
+              />
+            </li>
+          );
+        }
       })}
     </ul>
   );

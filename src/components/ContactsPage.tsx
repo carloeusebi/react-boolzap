@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import Contact from "./Contact";
 import ContactList from "./ContactList";
 import Notification from "./Notification";
@@ -14,6 +14,13 @@ const ContactsPage = (params: Params) => {
   const { name: userName, avatar: userAvatar } = data.user;
   const { activeContactId, setActiveContactId, isTyping } = params;
 
+  const [searchWord, setSearchWord] = useState("");
+
+  const handleKeyUp = (e: ChangeEvent<HTMLInputElement>) => {
+    const word: string = e.currentTarget.value.trim().toLowerCase();
+    setSearchWord(word);
+  };
+
   return (
     <section id="contacts">
       <header className="d-flex justify-between">
@@ -26,12 +33,17 @@ const ContactsPage = (params: Params) => {
       </header>
       <Notification />
       <div className="search-contact">
-        <input type="search" placeholder="Search or start a new chat"></input>
+        <input
+          type="search"
+          placeholder="Search or start a new chat"
+          onChange={handleKeyUp}
+        ></input>
       </div>
       <ContactList
         activeContactId={activeContactId}
         setActiveContactId={setActiveContactId}
         isTyping={isTyping}
+        searchWord={searchWord}
       />
     </section>
   );
