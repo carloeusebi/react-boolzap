@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Chat from "./Chat";
 import Contact from "./Contact";
-import { ContactObj } from "../data";
+import { ContactObj, Message } from "../data";
 import data from "../data";
+import { createNewMessage } from "../functions";
 
 interface Params {
   activeContactId: number;
@@ -16,6 +17,27 @@ const ChatPage = (params: Params) => {
   const name = activeContact ? activeContact.name : "";
   const avatar = activeContact ? activeContact.avatar : "";
   const messages = activeContact ? activeContact.messages : [];
+
+  const [updatedMessages, setUpdatedMessages] = useState(messages);
+
+  const send = (contact: ContactObj, message: Message) => {
+    contact.messages.push(message);
+    setUpdatedMessages([...contact.messages]);
+  };
+
+  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const message: string = e.currentTarget.value;
+    e.currentTarget.value = "";
+    if (activeContact) {
+      const newMessage: Message = createNewMessage(
+        activeContact,
+        message,
+        "sent"
+      );
+
+      send(activeContact, newMessage);
+    }
+  };
 
   return (
     <section id="chat">
@@ -38,7 +60,10 @@ const ChatPage = (params: Params) => {
           <i className="fa-regular fa-face-smile fa-xl"></i>
         </div>
         <div className="message-input h-100 flex-grow-1">
-          <textarea placeholder="Type a message"></textarea>
+          <input
+            placeholder="Type a message"
+            onKeyUp={(e) => e.key === "Enter" && handleInput(e)}
+          />
         </div>
         <div className="send activity-buttons">
           <i className="fa-solid fa-microphone fa-xl"></i>
