@@ -32,7 +32,6 @@ const ChatPage = (params: Params) => {
   const send = (contact: ContactObj, message: Message): void => {
     contact.messages = [...contact.messages, message];
     setUpdatedMessages([...contact.messages]);
-    //todo add scroll function
   };
 
   const sendResponse = async (): Promise<void> => {
@@ -52,7 +51,10 @@ const ChatPage = (params: Params) => {
   };
 
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    const message: string = e.currentTarget.value;
+    const message: string = e.currentTarget.value.trim();
+
+    if (!message) return;
+
     e.currentTarget.value = "";
     if (activeContact) {
       const newMessage: Message = createNewMessage(
